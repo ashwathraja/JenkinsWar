@@ -1,10 +1,3 @@
-pipeline {
-    agent { docker 'maven:3.3.3' }
-    stages {
-        stage('build') {
-            steps {
-                bat 'mvn --version'
-            }
-        }
-    }
+sshagent(['tomcat-pipeline-deploy']) {
+    sh 'scp -o StrictHostKeyChecking=no target/*.war ec2-user@18.219.83.247:/opt/apache-tomcat-9.0.16/webapps/'
 }
